@@ -4,11 +4,23 @@ function login(req, res) {
     // Get user credentials
     const { email, password } = req.body;
     // Authenticate the user
+
     if (authenticate(email, password)) {
         // Mark user session as authenticated
         res.cookie('loggedInUser', email);
         // Get return address
-        const returnTo = eval('(' + req.query.returnTo + ')');
+        let returnTo;
+        
+        try {
+            returnTo = JSON.parse(req.query.returnTo);
+        } catch {}
+
+        if (returnTo || typeof returnTo.url !== "string") {
+            res.clearCookie("loggedInUser");
+            throw new Error("Invalid returnTo object");
+        }
+
+        console.log(returnTo.url)
         // Redirect to the return address
         res.redirect(returnTo.url);
     } else {

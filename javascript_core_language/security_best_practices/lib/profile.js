@@ -4,6 +4,12 @@ const users = require('./users');
 function readProfile(req, res) {
     // Get search params
     const [field, value] = getParams(req.query, ['field', 'value']);
+
+    if (typeof field !== 'string' || typeof value !== 'string') {
+        res.sendStatus(400);
+        return;
+    }
+
     // Find user(s)
     const results = filter(users, field, value);
     res.json(results);

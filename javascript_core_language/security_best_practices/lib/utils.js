@@ -2,7 +2,7 @@
 function filter(items, field, value) {
     const results = [];
     for (let i = 0; i < items.length; ++i) {
-        if (items[i][field] == value) {
+        if (items[i][field] === value) {
             results.push(items[i]);
         }
     }

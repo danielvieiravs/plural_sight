@@ -36,12 +36,13 @@ function saveProfile() {
 }
 
 // Check if the user is logged in (based on email cookie)
-if (cookie.startsWith('loggedInUser=')) {
+if (cookie.includes("loggedInUser=")) {
     // Hide the warning banner and show the form
     document.getElementById('notLoggedIn').className = 'invisible';
     document.getElementById('profile').className = 'visible';
     // Get user email from cookie
-    const [nameAndValue] = cookie.split(';');
+
+    const nameAndValue = cookie.split(';').at(-1).replace(' ', '');
     const email = nameAndValue.slice('loggedInUser='.length);
     // Get user profile information
     const e = encodeURIComponent;
